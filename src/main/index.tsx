@@ -1,9 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Styles from './index-styles.scss'
+import '@/presentation/styles/globals.scss'
 
-ReactDOM.render(
-  <div className={Styles.main}>Main</div>,
-  document.getElementById('main')
-)
+ReactDOM.render(<div>Main</div>, document.getElementById('main'))
