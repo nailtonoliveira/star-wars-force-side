@@ -3,15 +3,19 @@ import { HttpGetClientSpy } from '@/data/test'
 import { UnexpectedError } from '@/domain/errors'
 import { mockLoadMaster } from '@/domain/test/mock-load-master'
 import { HttpStatusCode } from '@/data/protocols/http'
+import faker from 'faker'
 
 type SutTypes = {
   sut: RemoteLoadMaster
   httpGetClientSpy: HttpGetClientSpy<RemoteLoadMaster.Model>
 }
 
-const makeSut = (): SutTypes => {
+const makeSut = (
+  url1 = faker.internet.url(),
+  url2 = faker.internet.url()
+): SutTypes => {
   const httpGetClientSpy = new HttpGetClientSpy<RemoteLoadMaster.Model>()
-  const sut = new RemoteLoadMaster(httpGetClientSpy)
+  const sut = new RemoteLoadMaster(url1, url2, httpGetClientSpy)
   return {
     sut,
     httpGetClientSpy
@@ -20,9 +24,9 @@ const makeSut = (): SutTypes => {
 
 describe('RemoteLoadMaster', () => {
   test('Should call HttpGetClient twice with correct urls', async () => {
-    const url1 = '/people/1'
-    const url2 = '/people/4'
-    const { sut, httpGetClientSpy } = makeSut()
+    const url1 = faker.internet.url()
+    const url2 = faker.internet.url()
+    const { sut, httpGetClientSpy } = makeSut(url1, url2)
     await sut.load()
     expect(httpGetClientSpy.urls).toContain(url1)
     expect(httpGetClientSpy.urls).toContain(url2)

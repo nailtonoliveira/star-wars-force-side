@@ -4,13 +4,15 @@ import { LoadMaster } from '@/domain/usecases'
 
 export class RemoteLoadMaster implements LoadMaster {
   constructor(
+    private readonly firstUrl: string,
+    private readonly secondUrl: string,
     private readonly httpGetClient: HttpGetClient<RemoteLoadMaster.Model>
   ) {}
 
   async load(): Promise<LoadMaster.Model> {
     const httpResponse = await Promise.race([
-      this.httpGetClient.get('/people/1'),
-      this.httpGetClient.get('/people/4')
+      this.httpGetClient.get(this.firstUrl),
+      this.httpGetClient.get(this.secondUrl)
     ])
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
