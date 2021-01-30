@@ -1,9 +1,18 @@
-import { HttpGetClient } from '@/data/protocols/http'
+import {
+  HttpGetClient,
+  HttpResponse,
+  HttpStatusCode
+} from '@/data/protocols/http'
 
-export class HttpGetClientSpy implements HttpGetClient {
+export class HttpGetClientSpy<ResponseType>
+  implements HttpGetClient<ResponseType> {
   url: string[] = []
-  get(url: string): Promise<void> {
+  response: HttpResponse<ResponseType> = {
+    statusCode: HttpStatusCode.ok
+  }
+
+  async get(url: string): Promise<HttpResponse<ResponseType>> {
     this.url.push(url)
-    return null
+    return this.response
   }
 }

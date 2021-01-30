@@ -1,13 +1,14 @@
 import { RemoteLoadMaster } from './remote-load-master'
 import { HttpGetClientSpy } from '@/data/test'
+import { UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteLoadMaster
-  httpGetClientSpy: HttpGetClientSpy
+  httpGetClientSpy: HttpGetClientSpy<RemoteLoadMaster.Model>
 }
 
 const makeSut = (): SutTypes => {
-  const httpGetClientSpy = new HttpGetClientSpy()
+  const httpGetClientSpy = new HttpGetClientSpy<RemoteLoadMaster.Model>()
   const sut = new RemoteLoadMaster(httpGetClientSpy)
   return {
     sut,
@@ -22,7 +23,16 @@ describe('RemoteLoadMaster', () => {
     const { sut, httpGetClientSpy } = makeSut()
     await sut.load()
     expect(httpGetClientSpy.url).toEqual([url1, url2])
-    expect(httpGetClientSpy.url[0]).toBe(url1)
-    expect(httpGetClientSpy.url[1]).toBe(url2)
+    expect(httpGetClientSpy.url).toContain(url1)
+    expect(httpGetClientSpy.url).toContain(url2)
+  })
+
+  test('Should throws UnexpectedError if HttpGetClient return any error', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      statusCode: 500
+    }
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
