@@ -5,6 +5,7 @@ import { createMemoryHistory, MemoryHistory } from 'history'
 
 import Home from './home'
 import { LoadMasterSpy } from '@/domain/test/mock-load-master'
+import { AppProvider } from '@/presentation/contexts'
 
 type SutTypes = {
   loadMasterSpy: LoadMasterSpy
@@ -15,9 +16,11 @@ const makeSut = (): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] })
   const loadMasterSpy = new LoadMasterSpy()
   render(
-    <Router history={history}>
-      <Home loadMaster={loadMasterSpy} />
-    </Router>
+    <AppProvider loadMaster={loadMasterSpy}>
+      <Router history={history}>
+        <Home />
+      </Router>
+    </AppProvider>
   )
 
   return {

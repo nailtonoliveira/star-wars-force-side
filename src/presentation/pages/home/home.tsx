@@ -1,19 +1,16 @@
-import { LoadMaster } from '@/domain/usecases'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import React from 'react'
 import Styles from './home-styles.scss'
+import { AppContext } from '@/presentation/contexts'
 
-type Props = {
-  loadMaster: LoadMaster
-}
-
-const Home = ({ loadMaster }: Props): JSX.Element => {
+const Home = (): JSX.Element => {
+  const { findYourMaster } = useContext(AppContext)
   const history = useHistory()
   const handleStartClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     event.preventDefault()
-    loadMaster.load()
+    findYourMaster()
     history.push('/your-master')
   }
 
