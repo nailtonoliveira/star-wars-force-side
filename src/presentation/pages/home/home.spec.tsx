@@ -1,19 +1,28 @@
 import React from 'react'
+import { Router } from 'react-router-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
+import { createMemoryHistory, MemoryHistory } from 'history'
 
 import Home from './home'
 import { LoadMasterSpy } from '@/domain/test/mock-load-master'
 
 type SutTypes = {
   loadMasterSpy: LoadMasterSpy
+  history: MemoryHistory
 }
 
 const makeSut = (): SutTypes => {
+  const history = createMemoryHistory({ initialEntries: ['/'] })
   const loadMasterSpy = new LoadMasterSpy()
-  render(<Home loadMaster={loadMasterSpy} />)
+  render(
+    <Router history={history}>
+      <Home loadMaster={loadMasterSpy} />
+    </Router>
+  )
 
   return {
-    loadMasterSpy
+    loadMasterSpy,
+    history
   }
 }
 
@@ -22,5 +31,11 @@ describe('Home Component', () => {
     const { loadMasterSpy } = makeSut()
     fireEvent.click(screen.getByTestId('start-button'))
     expect(loadMasterSpy.callsCount).toBe(1)
+  })
+
+  test('Should go to /your-master route on START button click', () => {
+    const { history } = makeSut()
+    fireEvent.click(screen.getByTestId('start-button'))
+    expect(history.location.pathname).toBe('/your-master')
   })
 })
