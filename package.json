@@ -6,7 +6,10 @@
   "scripts": {
     "dev:base": "webpack-dev-server --config webpack.dev.js",
     "dev": "npm run dev:base -- --open",
-    "test": "jest --passWithNoTests --no-cache --runInBand"
+    "test": "jest --passWithNoTests --no-cache --runInBand",
+    "test:watch": "yarn test -- --watch",
+    "test:staged": "yarn test -- --findRelatedTests",
+    "test:ci": "yarn test -- --coverage"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
