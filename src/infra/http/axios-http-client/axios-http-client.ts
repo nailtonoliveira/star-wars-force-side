@@ -1,8 +1,12 @@
+import { HttpResponse } from '@/data/protocols/http'
 import axios from 'axios'
 
 export class AxiosHttpClient {
-  async get(url: string): Promise<void> {
-    await axios.get(url)
-    return null
+  async get(url: string): Promise<HttpResponse> {
+    const axiosResponse = await axios.get(url)
+    return {
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data
+    }
   }
 }
