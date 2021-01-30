@@ -1,4 +1,5 @@
 import { LoadMaster } from '@/domain/usecases'
+import { useHistory } from 'react-router-dom'
 import React from 'react'
 import Styles from './home-styles.scss'
 
@@ -7,11 +8,13 @@ type Props = {
 }
 
 const Home = ({ loadMaster }: Props): JSX.Element => {
+  const history = useHistory()
   const handleStartClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     event.preventDefault()
     loadMaster.load()
+    history.push('/your-master')
   }
 
   return (
