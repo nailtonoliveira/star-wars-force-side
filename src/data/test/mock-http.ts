@@ -6,13 +6,13 @@ import {
 
 export class HttpGetClientSpy<ResponseType>
   implements HttpGetClient<ResponseType> {
-  url: string[] = []
+  urls: string[] = []
   response: HttpResponse<ResponseType> = {
     statusCode: HttpStatusCode.ok
   }
 
   async get(url: string): Promise<HttpResponse<ResponseType>> {
-    this.url.push(url)
+    this.urls.push(url)
     return this.response
   }
 }
