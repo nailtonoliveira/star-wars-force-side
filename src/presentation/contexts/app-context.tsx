@@ -10,12 +10,21 @@ type Props = {
 
 export const AppProvider = ({ children, loadMaster }: Props): JSX.Element => {
   const [state, setState] = useState({
-    isLoading: false
+    isLoading: false,
+    masterName: null
   })
 
   const findYourMaster = async () => {
-    setState((oldState) => ({ ...oldState, isLoading: true }))
-    await loadMaster.load()
+    setState({
+      isLoading: true,
+      masterName: null
+    })
+    const master = await loadMaster.load()
+
+    setState({
+      masterName: master.name,
+      isLoading: false
+    })
   }
 
   return (

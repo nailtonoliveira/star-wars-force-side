@@ -4,12 +4,9 @@ import Styles from './home-styles.scss'
 import { AppContext } from '@/presentation/contexts'
 
 const Home = (): JSX.Element => {
-  const { findYourMaster } = useContext(AppContext)
+  const { findYourMaster, state } = useContext(AppContext)
   const history = useHistory()
-  const handleStartClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    event.preventDefault()
+  const handleStartClick = (): void => {
     findYourMaster()
     history.push('/your-master')
   }
@@ -24,6 +21,7 @@ const Home = (): JSX.Element => {
         data-testid="start-button"
         type="button"
         onClick={handleStartClick}
+        disabled={state.isLoading}
       >
         Start
       </button>
