@@ -16,13 +16,13 @@ const YourMaster = (): JSX.Element => {
     <div
       data-testid="your-master-wrap"
       className={Styles.yourMasterWrap}
-      force-side={state?.masterName === 'Luke Skywalker' ? 'light' : 'dark'}
+      force-side={state.masterName === 'Darth Vader' ? 'dark' : 'light'}
       choosing-force={state.masterName ? 'no' : 'yes'}
     >
       <header className={Styles.header}>
         <Link to="/" replace data-testid="back-link" href="#">
           <Icon
-            iconName={state?.masterName === 'Darth Vader' ? 'white' : 'black'}
+            iconName={state.masterName === 'Darth Vader' ? 'white' : 'black'}
           />
           <span>back</span>
         </Link>

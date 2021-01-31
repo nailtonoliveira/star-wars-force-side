@@ -54,7 +54,7 @@ describe('YourMaster Component', () => {
     waitFor(() => screen.getByTestId('your-master-wrap'))
   })
 
-  test('Should render Master correctly', async () => {
+  test('Should render Master correctly on Light Side', async () => {
     const { loadMasterSpy } = makeSut()
     loadMasterSpy.master = { name: 'Luke Skywalker' }
     fireEvent.click(screen.getByText(/^choose your path/))
@@ -78,6 +78,34 @@ describe('YourMaster Component', () => {
     expect(screen.getByTestId('master-text')).toBeInTheDocument()
     expect(screen.getByTestId('master-text')).toHaveTextContent(
       'Your master is Luke Skywalker'
+    )
+    expect(screen.queryByTestId('text-skeleton')).not.toBeInTheDocument()
+  })
+
+  test('Should render Master correctly on Dark Side', async () => {
+    const { loadMasterSpy } = makeSut()
+    loadMasterSpy.master = { name: 'Darth Vader' }
+    fireEvent.click(screen.getByText(/^choose your path/))
+    await waitFor(() => screen.getByTestId('your-master-wrap'))
+    expect(screen.getByTestId('your-master-wrap')).toHaveAttribute(
+      'choosing-force',
+      'no'
+    )
+    expect(screen.getByTestId('your-master-wrap')).toHaveAttribute(
+      'force-side',
+      'dark'
+    )
+    expect(screen.getByTestId('icon')).toHaveProperty('src', IconNames.white)
+    expect(screen.getByText(/^choose your path/)).toBeEnabled()
+    expect(screen.getByTestId('master-image')).toBeInTheDocument()
+    expect(screen.getByTestId('master-image')).toHaveProperty(
+      'src',
+      Images.dark
+    )
+    expect(screen.queryByTestId('image-skeleton')).not.toBeInTheDocument()
+    expect(screen.getByTestId('master-text')).toBeInTheDocument()
+    expect(screen.getByTestId('master-text')).toHaveTextContent(
+      'Your master is Darth Vader'
     )
     expect(screen.queryByTestId('text-skeleton')).not.toBeInTheDocument()
   })
