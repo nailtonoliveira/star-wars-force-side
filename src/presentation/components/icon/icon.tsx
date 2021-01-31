@@ -1,14 +1,16 @@
 import React from 'react'
 
-enum Icons {
+export enum IconNames {
   white = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAaCAYAAABPY4eKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAB2SURBVHgB7ZbBCYAwDEV/ncBRHMGR3MCO5AaOpBvEgK2IkIPQJIfmQeihh/cohRb4CRFNPCusKeKDbuwCPuLKDG0EcYY2IQ5xiFuQqpiXnWd87Z08GxRJgtiEAY64HvuDcOHcX64IiIAI6OADKQRkWFMCFjTgApx5ztt1iAGMAAAAAElFTkSuQmCC',
   black = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAaCAYAAABPY4eKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD/SURBVHgBxZbBDYIwFIb/6sWjF4aAkyPozREcww2Ejbx6UjfwRBjBhIsTgH9VSBQK1NLHlzRtmibfoyF9P2BJFEUrjgNGYG5zWIuVUmcut0EQIM/zKxxQQw9W4rIsl9VeURSbLMsu+JPZkENtYpK4iDW9X24Sp2kawxE1lbhT7ltslEuIW+VS4oZcUvwllxbXcoP4wXGER5RBLMLrhaMYU1BfOyfdMGSvvVoYCoj5wyXwRN1S2R7vbJMnLncci8/2eozW2SufooBGmJAsoDXJSBVgjFESBXRmON8F9AZInwVYBUj8vAMiAVLDx+bGaYP3y6dxDpDW6BsIw3CPEXgCcVq5PWdLYOUAAAAASUVORK5CYII='
 }
 
 type Props = {
-  iconName: keyof typeof Icons
+  iconName: keyof typeof IconNames
 }
 
-const Icon = ({ iconName }: Props): JSX.Element => <img src={Icons[iconName]} />
+const Icon = ({ iconName }: Props): JSX.Element => (
+  <img data-testid="icon" src={IconNames[iconName]} />
+)
 
 export default Icon

@@ -6,7 +6,7 @@ type Props = {
 }
 
 const MasterImage = ({ master }: Props): JSX.Element => {
-  return <img src={Images[master]} />
+  return <img data-testid="master-image" src={Images[master]} />
 }
 
 export default MasterImage
