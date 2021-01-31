@@ -9,7 +9,8 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "yarn test -- --watch",
     "test:staged": "yarn test -- --findRelatedTests",
-    "test:ci": "yarn test -- --coverage"
+    "test:ci": "yarn test -- --coverage",
+    "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
@@ -24,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "clean-webpack-plugin": "^3.0.0",
+    "coveralls": "^3.1.0",
     "css-loader": "^5.0.1",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
