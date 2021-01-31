@@ -42,6 +42,7 @@ describe('Home Component', () => {
     const { history } = makeSut()
     const startButton = screen.getByTestId('start-button')
     fireEvent.click(startButton)
+    expect(history.length).toBe(2)
     expect(history.location.pathname).toBe('/your-master')
     await waitFor(() => startButton)
   })

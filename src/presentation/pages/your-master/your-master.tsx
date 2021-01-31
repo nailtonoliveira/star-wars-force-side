@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { Icon, MasterImage } from '@/presentation/components'
 
 import Styles from './your-master-styles.scss'
@@ -19,12 +20,12 @@ const YourMaster = (): JSX.Element => {
       choosing-force={state.masterName ? 'no' : 'yes'}
     >
       <header className={Styles.header}>
-        <a href="#">
+        <Link to="/" replace data-testid="back-link" href="#">
           <Icon
             iconName={state?.masterName === 'Darth Vader' ? 'white' : 'black'}
           />
           <span>back</span>
-        </a>
+        </Link>
       </header>
       <div className={Styles.content}>
         <button onClick={handleClick} disabled={state.isLoading}>
