@@ -1,3 +1,5 @@
+[![Build Status](https://www.travis-ci.com/nailtonoliveira/star-wars-force-side.svg?branch=main)](https://www.travis-ci.com/nailtonoliveira/star-wars-force-side)
+
 <h1 align="center">
     Star Wars - Choose your Master
 </h1>
