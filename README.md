@@ -1,4 +1,5 @@
 [![Build Status](https://www.travis-ci.com/nailtonoliveira/star-wars-force-side.svg?branch=main)](https://www.travis-ci.com/nailtonoliveira/star-wars-force-side)
+[![Coverage Status](https://coveralls.io/repos/github/nailtonoliveira/star-wars-force-side/badge.svg?branch=main)](https://coveralls.io/github/nailtonoliveira/star-wars-force-side?branch=main)
 
 <h1 align="center">
     Star Wars - Choose your Master
