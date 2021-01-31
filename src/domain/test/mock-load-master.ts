@@ -6,8 +6,12 @@ export const mockLoadMaster = (): LoadMaster.Model => ({
 
 export class LoadMasterSpy implements LoadMaster {
   callsCount = 0
-  load(): Promise<LoadMaster.Model> {
+  master: LoadMaster.Model = {
+    name: 'Luke Skywalker'
+  }
+
+  async load(): Promise<LoadMaster.Model> {
     this.callsCount++
-    return null
+    return this.master
   }
 }

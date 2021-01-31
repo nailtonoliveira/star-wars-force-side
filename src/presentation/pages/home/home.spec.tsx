@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { createMemoryHistory, MemoryHistory } from 'history'
 
 import Home from './home'
@@ -30,15 +30,19 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Home Component', () => {
-  test('Should call LoadMaster on START button click', () => {
+  test('Should call LoadMaster on START button click', async () => {
     const { loadMasterSpy } = makeSut()
-    fireEvent.click(screen.getByTestId('start-button'))
+    const startButton = screen.getByTestId('start-button')
+    fireEvent.click(startButton)
     expect(loadMasterSpy.callsCount).toBe(1)
+    await waitFor(() => startButton)
   })
 
-  test('Should go to /your-master route on START button click', () => {
+  test('Should go to /your-master route on START button click', async () => {
     const { history } = makeSut()
-    fireEvent.click(screen.getByTestId('start-button'))
+    const startButton = screen.getByTestId('start-button')
+    fireEvent.click(startButton)
     expect(history.location.pathname).toBe('/your-master')
+    await waitFor(() => startButton)
   })
 })

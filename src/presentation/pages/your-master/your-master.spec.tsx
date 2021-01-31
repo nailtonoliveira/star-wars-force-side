@@ -1,9 +1,10 @@
 import React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import YourMaster from './your-master'
 import { LoadMasterSpy } from '@/domain/test/mock-load-master'
 import { AppProvider } from '@/presentation/contexts'
 import { IconNames } from '@/presentation/components/icon/icon'
+import { Images } from '@/presentation/components/master-image/base64-images'
 
 type SutTypes = {
   loadMasterSpy: LoadMasterSpy
@@ -27,12 +28,12 @@ describe('YourMaster Component', () => {
     const { loadMasterSpy } = makeSut()
     fireEvent.click(screen.getByText(/^choose your path/))
     expect(loadMasterSpy.callsCount).toBe(1)
+    waitFor(() => screen.getByTestId('your-master-wrap'))
   })
 
-  test('Should render correctly on state isLoading', () => {
+  test('Should render correctly on state isLoading', async () => {
     makeSut()
     fireEvent.click(screen.getByText(/^choose your path/))
-
     expect(screen.getByTestId('your-master-wrap')).toHaveAttribute(
       'choosing-force',
       'yes'
@@ -43,5 +44,34 @@ describe('YourMaster Component', () => {
     expect(screen.getByTestId('image-skeleton')).toBeInTheDocument()
     expect(screen.queryByTestId('master-text')).not.toBeInTheDocument()
     expect(screen.getByTestId('text-skeleton')).toBeInTheDocument()
+    waitFor(() => screen.getByTestId('your-master-wrap'))
+  })
+
+  test('Should render Master correctly', async () => {
+    const { loadMasterSpy } = makeSut()
+    loadMasterSpy.master = { name: 'Luke Skywalker' }
+    fireEvent.click(screen.getByText(/^choose your path/))
+    await waitFor(() => screen.getByTestId('your-master-wrap'))
+    expect(screen.getByTestId('your-master-wrap')).toHaveAttribute(
+      'choosing-force',
+      'no'
+    )
+    expect(screen.getByTestId('your-master-wrap')).toHaveAttribute(
+      'force-side',
+      'light'
+    )
+    expect(screen.getByTestId('icon')).toHaveProperty('src', IconNames.black)
+    expect(screen.getByText(/^choose your path/)).toBeEnabled()
+    expect(screen.getByTestId('master-image')).toBeInTheDocument()
+    expect(screen.getByTestId('master-image')).toHaveProperty(
+      'src',
+      Images.light
+    )
+    expect(screen.queryByTestId('image-skeleton')).not.toBeInTheDocument()
+    expect(screen.getByTestId('master-text')).toBeInTheDocument()
+    expect(screen.getByTestId('master-text')).toHaveTextContent(
+      'Your master is Luke Skywalker'
+    )
+    expect(screen.queryByTestId('text-skeleton')).not.toBeInTheDocument()
   })
 })
