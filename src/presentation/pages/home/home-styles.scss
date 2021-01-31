@@ -54,3 +54,19 @@
     }
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .homeWrap {
+    .title {
+      margin-top: 170px;
+      text-align: center;
+
+      strong {
+        &::before {
+          content: "\a";
+          white-space: pre;
+        }
+      }
+    }
+  }
+}
