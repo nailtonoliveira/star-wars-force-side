@@ -3,4 +3,11 @@ node_js:
   - 12
 script:
   - eslint 'src/**'
-  - yarn test:coveralls
+  - npm run test:coveralls
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API
+  app: star-wars-choose-force
+  skip_cleanup: true
+notifications:
+  email: false
