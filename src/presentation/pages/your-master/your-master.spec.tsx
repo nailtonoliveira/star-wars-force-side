@@ -1,4 +1,6 @@
 import React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import YourMaster from './your-master'
 import { LoadMasterSpy } from '@/domain/test/mock-load-master'
@@ -8,18 +10,23 @@ import { Images } from '@/presentation/components/master-image/base64-images'
 
 type SutTypes = {
   loadMasterSpy: LoadMasterSpy
+  history: MemoryHistory
 }
 
 const makeSut = (): SutTypes => {
+  const history = createMemoryHistory({ initialEntries: ['/your-master'] })
   const loadMasterSpy = new LoadMasterSpy()
   render(
     <AppProvider loadMaster={loadMasterSpy}>
-      <YourMaster />
+      <Router history={history}>
+        <YourMaster />
+      </Router>
     </AppProvider>
   )
 
   return {
-    loadMasterSpy
+    loadMasterSpy,
+    history
   }
 }
 
@@ -73,5 +80,12 @@ describe('YourMaster Component', () => {
       'Your master is Luke Skywalker'
     )
     expect(screen.queryByTestId('text-skeleton')).not.toBeInTheDocument()
+  })
+
+  test('Should go back to Home on back link click', () => {
+    const { history } = makeSut()
+    fireEvent.click(screen.getByTestId('back-link'))
+    expect(history.length).toBe(1)
+    expect(history.location.pathname).toBe('/')
   })
 })
