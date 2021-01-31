@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Icon, MasterImage } from '@/presentation/components'
 
 import Styles from './your-master-styles.scss'
+import { AppContext } from '@/presentation/contexts'
 
 const YourMaster = (): JSX.Element => {
+  const { findYourMaster } = useContext(AppContext)
+
+  const handleClick = () => {
+    findYourMaster()
+  }
+
   return (
     <div
       className={Styles.yourMasterWrap}
@@ -17,7 +24,9 @@ const YourMaster = (): JSX.Element => {
         </a>
       </header>
       <div className={Styles.content}>
-        <button type="button">choose your path again, Padawan</button>
+        <button type="button" onClick={handleClick}>
+          choose your path again, Padawan
+        </button>
         <MasterImage master="dark" />
         <span>
           Your master is <strong>Darth Vader</strong>
